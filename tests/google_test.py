@@ -1,0 +1,18 @@
+import pytest
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+
+@pytest.fixture
+def browser():
+    driver = webdriver.Safari()
+    yield driver
+    driver.quit()
+
+
+def test_run_google(browser):
+    browser.get('http://www.yahoo.com')
+    assert 'Yahoo' in browser.title
+    elem = browser.find_element(By.NAME, 'p')  # Find the search box
+    elem.send_keys('seleniumhq' + Keys.RETURN)
